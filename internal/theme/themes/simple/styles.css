@@ -1,4 +1,4 @@
-/* wsbuilder default theme.
+/* The simple theme, and the base every other theme builds on.
    Restyle a workshop with theme.primary / theme.accent in workshop.yaml, or
    with a theme/custom.css that overrides the variables below. */
 
@@ -229,6 +229,20 @@ a:hover { color: var(--accent); }
 
 .mobile-nav { display: none; }
 
+/* The module list of themes with no sidebar. */
+.contents-box { margin: 32px 0; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.contents-box summary { display: flex; align-items: center; gap: 8px; padding: 14px 20px; cursor: pointer; list-style: none; user-select: none; }
+.contents-box summary::-webkit-details-marker { display: none; }
+.contents-box summary:hover { background: var(--sunken); }
+.contents-box-title { flex: 1; font-size: .94rem; font-weight: 600; }
+.contents-box-toggle { color: var(--muted); font-size: .75rem; transition: transform .2s; }
+.contents-box[open] .contents-box-toggle { transform: rotate(180deg); }
+.contents-box .module-nav { padding: 12px 16px 14px; border-top: 1px solid var(--line); font-size: .9rem; line-height: 1.5; }
+.contents-box .module-nav-home { margin: 0 8px 6px; }
+.contents-box .module-nav-part { margin: 14px 8px 4px; }
+.contents-box .module-nav li a { padding: 4px 26px 4px 8px; border-radius: 4px; }
+.contents-box .module-nav li a:hover { background: var(--sunken); }
+
 .doc { min-width: 0; max-width: 780px; width: 100%; margin: 0 auto; padding: 40px 0 72px; }
 .doc-header h1 { margin: 0 0 12px; font-size: clamp(2rem, 4.5vw, 2.7rem); line-height: 1.13; letter-spacing: -0.02em; }
 
@@ -411,7 +425,7 @@ html[data-track] .track-label { display: none; }
 }
 
 @media print {
-  .topbar, .sidebar, .toc, .mobile-nav, .pager, .complete, .footer, .copy-button { display: none !important; }
+  .topbar, .sidebar, .toc, .mobile-nav, .contents-box, .pager, .complete, .footer, .copy-button { display: none !important; }
   .layout { display: block; }
   .doc { max-width: none; padding: 0; }
   .alert details, details.alert { display: block; }

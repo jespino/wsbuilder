@@ -1,6 +1,6 @@
 /* The internals theme, inspired by the Internals for Interns blog: one calm
    reading column on a white page, light code blocks and a single blue accent.
-   It restyles the default stylesheet, so it only holds the differences. */
+   It restyles the base stylesheet, so it only holds the differences. */
 
 :root {
   --primary: #2563eb;
@@ -143,21 +143,8 @@ body { font-size: 17px; line-height: 1.75; }
 .article-meta { display: flex; flex-wrap: wrap; gap: 4px 0; margin: 0; color: var(--muted); font-size: .95rem; }
 .article-meta > span + span::before { content: "•"; margin: 0 12px; color: var(--line); }
 
-.series-nav { margin: 32px 0; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
-.series-nav summary { display: flex; align-items: center; gap: 8px; padding: 14px 20px; cursor: pointer; list-style: none; user-select: none; }
-.series-nav summary::-webkit-details-marker { display: none; }
-.series-nav summary:hover { background: var(--sunken); }
-.series-title { flex: 1; font-size: .94rem; font-weight: 600; }
-.series-toggle { color: var(--muted); font-size: .75rem; transition: transform .2s; }
-.series-nav[open] .series-toggle { transform: rotate(180deg); }
-
-.series-nav .module-nav { padding: 12px 16px 14px; border-top: 1px solid var(--line); font-size: .9rem; line-height: 1.5; }
-.series-nav .module-nav-home { margin: 0 8px 6px; }
-.series-nav .module-nav-part { margin: 14px 8px 4px; }
-.series-nav .module-nav li a { padding: 4px 26px 4px 8px; border-radius: 4px; }
-.series-nav .module-nav li a:hover { background: var(--sunken); }
-.series-nav .module-nav li a[aria-current] { background: var(--primary); color: #ffffff; font-weight: 500; }
-.series-nav .module-nav li a[aria-current] .module-nav-number { color: #ffffff; }
+.contents-box .module-nav li a[aria-current] { background: var(--primary); color: #ffffff; font-weight: 500; }
+.contents-box .module-nav li a[aria-current] .module-nav-number { color: #ffffff; }
 
 .exercise { background: var(--surface); border-radius: 6px; }
 
@@ -210,5 +197,5 @@ body { font-size: 17px; line-height: 1.75; }
 }
 
 @media print {
-  .series-nav, .toc { display: none !important; }
+  .toc { display: none !important; }
 }

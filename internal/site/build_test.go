@@ -402,7 +402,7 @@ func TestEveryThemeBuildsEveryPage(t *testing.T) {
 	}
 }
 
-func TestInternalsThemeLayersOnTheDefault(t *testing.T) {
+func TestThemesLayerOnTheBase(t *testing.T) {
 	root := workshop(t, withTheme("internals"))
 	build(t, root)
 
@@ -412,28 +412,64 @@ func TestInternalsThemeLayersOnTheDefault(t *testing.T) {
 	if styles < 0 || overlay < styles {
 		t.Errorf("theme.css must load after styles.css:\n%s", page)
 	}
-	mustContain(t, page, `class="series-nav"`, "(1 de 2)")
+	mustContain(t, page, `class="contents-box"`, "(1 de 2)")
 
-	defaultRoot := workshop(t, basic())
-	build(t, defaultRoot)
-	if read(t, defaultRoot, "styles.css") != read(t, root, "styles.css") {
-		t.Error("the stylesheet should be shared with the default theme")
+	baseRoot := workshop(t, withTheme(theme.BaseName))
+	build(t, baseRoot)
+	if read(t, baseRoot, "styles.css") != read(t, root, "styles.css") {
+		t.Error("the stylesheet should be shared with the base theme")
 	}
-	if _, err := os.Stat(filepath.Join(defaultRoot, "dist", "theme.css")); err == nil {
-		t.Error("the default theme has no theme.css")
+	if _, err := os.Stat(filepath.Join(baseRoot, "dist", "theme.css")); err == nil {
+		t.Error("the base theme has no theme.css")
 	}
 }
 
-func TestEjectingInternalsBuildsTheSameSite(t *testing.T) {
-	root := workshop(t, withTheme("internals"))
-	build(t, root)
-	before := read(t, root, "01-one.html")
-	if _, err := theme.Eject("internals", filepath.Join(root, "theme")); err != nil {
-		t.Fatal(err)
+func TestWorkshopsWithoutAThemeGetTheDefault(t *testing.T) {
+	unset := workshop(t, basic())
+	build(t, unset)
+	explicit := workshop(t, withTheme(theme.DefaultName))
+	build(t, explicit)
+	for _, file := range []string{"theme.css", "01-one.html"} {
+		if read(t, unset, file) != read(t, explicit, file) {
+			t.Errorf("%s differs from a workshop naming the default theme", file)
+		}
 	}
-	build(t, root)
-	if read(t, root, "01-one.html") != before {
-		t.Error("ejecting the theme changed the output")
+	mustContain(t, read(t, unset, "theme.css"), "The default theme")
+}
+
+func TestEjectingAnyThemeBuildsTheSameSite(t *testing.T) {
+	for _, info := range theme.Available {
+		t.Run(info.Name, func(t *testing.T) {
+			root := workshop(t, withTheme(info.Name))
+			build(t, root)
+			before := read(t, root, "01-one.html")
+			if _, err := theme.Eject(info.Name, filepath.Join(root, "theme")); err != nil {
+				t.Fatal(err)
+			}
+			build(t, root)
+			if read(t, root, "01-one.html") != before {
+				t.Error("ejecting the theme changed the output")
+			}
+		})
+	}
+}
+
+// Every theme has to work in both color modes, whichever way the reader gets
+// there, and with colors set in workshop.yaml.
+func TestThemesHandleDarkModeAndConfiguredColors(t *testing.T) {
+	for _, info := range theme.Available {
+		if info.Name == theme.BaseName {
+			continue
+		}
+		t.Run(info.Name, func(t *testing.T) {
+			root := workshop(t, withTheme(info.Name))
+			build(t, root)
+			css := read(t, root, "theme.css")
+			mustContain(t, css, "prefers-color-scheme: dark", `:root[data-theme="dark"]`)
+			if strings.Contains(css, "http://") || strings.Contains(css, "https://") || strings.Contains(css, "@import") {
+				t.Error("a theme must not load anything from third parties")
+			}
+		})
 	}
 }
 

@@ -3,7 +3,7 @@
 //
 //  1. the workshop's theme directory, where it replaces any single file
 //  2. the theme selected with theme.name in workshop.yaml
-//  3. the default theme
+//  3. the simple theme, which is complete and is the base of all the others
 //
 // That lets a theme contain only what makes it different.
 package theme
@@ -32,7 +32,7 @@ const (
 	Script           = "app.js"
 
 	// ThemeCSS is loaded after the stylesheet. Themes use it to restyle the
-	// default theme instead of replacing it.
+	// base theme instead of replacing it.
 	ThemeCSS = "theme.css"
 
 	// CustomCSS is loaded last, when a workshop has one. It is the way to adjust
@@ -40,8 +40,13 @@ const (
 	CustomCSS = "custom.css"
 )
 
-// DefaultName is the theme everything falls back to.
-const DefaultName = "default"
+const (
+	// DefaultName is the theme used when a workshop doesn't select one.
+	DefaultName = "default"
+
+	// BaseName is the theme every other theme falls back to.
+	BaseName = "simple"
+)
 
 // Info describes a built-in theme.
 type Info struct {
@@ -51,7 +56,8 @@ type Info struct {
 
 // Available lists the built-in themes.
 var Available = []Info{
-	{DefaultName, "Sidebar, table of contents and module cards, for long workshops"},
+	{DefaultName, "Bold cards, a dark navbar and a purple to orange gradient"},
+	{BaseName, "Sidebar, table of contents and quiet module cards, for long workshops"},
 	{"internals", "A single reading column, inspired by Internals for Interns"},
 }
 
@@ -97,13 +103,13 @@ func New(name, dir string) (*Theme, error) {
 	return &Theme{name: name, dir: dir}, nil
 }
 
-// Lookup returns a theme file without falling back to the default theme. It is
+// Lookup returns a theme file without falling back to the base theme. It is
 // how optional files are found.
 func (t *Theme) Lookup(name string) ([]byte, bool) {
 	if data, err := os.ReadFile(filepath.Join(t.dir, name)); err == nil {
 		return data, true
 	}
-	if t.name == DefaultName {
+	if t.name == BaseName {
 		return nil, false
 	}
 	data, err := builtin.ReadFile("themes/" + t.name + "/" + name)
@@ -115,7 +121,7 @@ func (t *Theme) Read(name string) ([]byte, error) {
 	if data, ok := t.Lookup(name); ok {
 		return data, nil
 	}
-	return builtin.ReadFile("themes/" + DefaultName + "/" + name)
+	return builtin.ReadFile("themes/" + BaseName + "/" + name)
 }
 
 // Eject writes every file of the named theme into dir, including those it
@@ -131,7 +137,7 @@ func Eject(name, dir string) ([]string, error) {
 	}
 
 	files := map[string]bool{}
-	for _, source := range []string{DefaultName, t.name} {
+	for _, source := range []string{BaseName, t.name} {
 		entries, err := fs.ReadDir(builtin, "themes/"+source)
 		if err != nil {
 			return nil, err

@@ -1,4 +1,4 @@
-/* wsbuilder default theme. Everything here is an enhancement: the content,
+/* Shared by every theme. Everything here is an enhancement: the content,
  * links and downloads all work without JavaScript. */
 (function () {
   var root = document.documentElement;

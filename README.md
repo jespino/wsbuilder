@@ -28,7 +28,7 @@ my-workshop/
       main.go
       solution/             left out of the starter download
   public/                   optional, copied as is to the site root (CNAME, favicon)
-  theme/                    optional, overrides of the default theme
+  theme/                    optional, overrides of the theme's files
   dist/                     the generated site
 ```
 
@@ -197,12 +197,14 @@ load nothing from third parties, so they work offline, on conference wifi includ
 
 | Theme | Look |
 |---|---|
-| `default` | Sidebar, table of contents and module cards, for long workshops |
+| `default` | Bold cards, a dark navbar and a purple to orange gradient |
+| `simple` | Sidebar, table of contents and quiet module cards, for long workshops |
 | `internals` | A single reading column, inspired by [Internals for Interns](https://internals-for-interns.com/) |
 
-Select one with `theme.name` in `workshop.yaml`, or with `wsbuilder init --theme`. Both use
-Inter and JetBrains Mono only if the reader already has them, as loading web fonts would
-break the promise of no third-party requests.
+Select one with `theme.name` in `workshop.yaml`, or with `wsbuilder init --theme`. Every
+theme has a light and a dark mode. `default` and `internals` prefer fonts like Lato and
+Inter, but only if the reader already has them, as loading web fonts would break the
+promise of no third-party requests.
 
 To adjust a theme, from least to most work:
 
@@ -214,12 +216,13 @@ To adjust a theme, from least to most work:
    from.
 
 Each file resolves in this order: the workshop's `theme/`, the theme in `theme.name`, then
-`default`. Templates are Go `html/template`, their data is the `Page` struct in
+`simple`, which is complete and is the base of the others. Templates are Go `html/template`, their data is the `Page` struct in
 `internal/site/pages.go`, and `base.html` defines the pieces a module page can reuse.
 
 To add a built-in theme, create `internal/theme/themes/<name>/` with only the files that
 differ, usually a `theme.css` on top of the shared stylesheet, and list it in
-`theme.Available`.
+`theme.Available`. A theme with no sidebar can reuse the `contents-box` piece from
+`base.html`, and needs a dark mode: the tests check for one.
 
 ## Development
 

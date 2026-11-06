@@ -15,14 +15,7 @@
       </p>
     </header>
 
-    <details class="series-nav">
-      <summary>
-        <span class="series-title">{{.UI.contents}} ({{$m.Position}} {{.UI.of}} {{.Count}})</span>
-        <span class="series-toggle" aria-hidden="true">▼</span>
-      </summary>
-      {{template "nav" .}}
-    </details>
-
+    {{- template "contents-box" .}}
     {{- template "module-notice" .}}
     {{- template "exercise" .}}
 

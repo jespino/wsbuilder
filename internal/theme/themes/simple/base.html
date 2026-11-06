@@ -112,6 +112,16 @@
 
 {{/* Pieces of a module page, shared by every theme. */}}
 
+{{define "contents-box"}}
+<details class="contents-box">
+  <summary>
+    <span class="contents-box-title">{{.UI.contents}} ({{.Module.Position}} {{.UI.of}} {{.Count}})</span>
+    <span class="contents-box-toggle" aria-hidden="true">▼</span>
+  </summary>
+  {{template "nav" .}}
+</details>
+{{end}}
+
 {{define "module-notice"}}
 {{- if .Module.Fallback}}
 <p class="notice">{{.UI.not_translated}}</p>

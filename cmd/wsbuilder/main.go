@@ -364,7 +364,7 @@ func cmdClean(args []string) error {
 
 func cmdThemes() error {
 	for _, info := range theme.Available {
-		fmt.Printf("  %-12s %s\n", info.Name, info.Description)
+		fmt.Printf("  %-15s %s\n", info.Name, info.Description)
 	}
 	fmt.Println("\nSelect one with theme.name in workshop.yaml, or with `wsbuilder init --theme`.")
 	return nil
