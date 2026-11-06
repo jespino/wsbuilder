@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 150" role="img" aria-label="Markdown files go through wsbuilder and become a static website" font-family="system-ui, sans-serif" font-size="15">
+  <rect width="640" height="150" rx="12" fill="#3f3cbb"/>
+  <g fill="#ffffff">
+    <rect x="28" y="45" width="150" height="60" rx="8"/>
+    <rect x="245" y="45" width="150" height="60" rx="8"/>
+    <rect x="462" y="45" width="150" height="60" rx="8"/>
+  </g>
+  <g fill="#24242b" text-anchor="middle">
+    <text x="103" y="80">modules/*.md</text>
+    <text x="320" y="80">wsbuilder build</text>
+    <text x="537" y="80">dist/*.html</text>
+  </g>
+  <g stroke="#ffffff" stroke-width="2.5" fill="none">
+    <path d="M186 75h48m-8-7 8 7-8 7"/>
+    <path d="M403 75h48m-8-7 8 7-8 7"/>
+  </g>
+</svg>

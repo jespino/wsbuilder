@@ -1,0 +1,59 @@
+# Everything about the workshop that is not module content.
+
+title: __TITLE__
+# short_title: Shown in the navigation bar when the title is long.
+description: "One or two sentences about what participants will learn. Shown on the landing page and in search results."
+
+# Where the site is published. Needed for canonical URLs and the sitemap.
+# url: https://example.github.io/my-workshop/
+
+# Enables the repository links, and links from modules to other repository files.
+# repository: https://github.com/example/my-workshop
+# branch: main
+
+author:
+  name: __AUTHOR__
+  # role: What you do
+  # bio: A sentence or two about you.
+  # avatar: images/author.webp   # inside modules/images/
+  # links:
+  #   - label: GitHub
+  #     url: https://github.com/example
+
+# Label and value pairs on the landing page.
+facts:
+  - label: Format
+    value: Theory + exercises
+  - label: Duration
+    value: Half a day
+
+# The first language is the default, written in NN-name.md. The others go in
+# NN-name.<code>.md and are published under /<code>/. Anything missing falls
+# back to the default language.
+languages:
+  - code: en
+  # - code: es
+  #   title: Mi Workshop
+  #   description: Lo que aprenderán los participantes.
+
+# Code tracks that readers can switch between. In a module, wrap what is specific
+# to a track in <!-- track:go --> ... <!-- /track -->.
+# tracks:
+#   - id: go
+#     name: Go
+#   - id: python
+#     name: Python
+
+theme:
+  name: __THEME__     # `wsbuilder themes` lists the options
+  # primary: "#3f3cbb"   # these replace the theme's own colors
+  # accent: "#d9480f"
+
+# Defaults, in case your layout differs:
+# paths:
+#   modules: modules
+#   exercises: exercises
+#   images: modules/images
+#   public: public       # copied as is to the site root: CNAME, favicon.ico...
+#   theme: theme         # overrides of the theme's files, see `wsbuilder eject`
+#   output: dist

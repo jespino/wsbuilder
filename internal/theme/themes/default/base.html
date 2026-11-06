@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="{{.Lang}}" data-storage="{{.StorageKey}}"{{if .Tracks}} data-tracks="{{range $i, $t := .Tracks}}{{if $i}},{{end}}{{$t.ID}}{{end}}"{{end}}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{- if .BaseHref}}
+  <base href="{{.BaseHref}}">
+  {{- end}}
+  <title>{{.Title}}</title>
+  <meta name="description" content="{{.Description}}">
+  {{- if .Author.Name}}
+  <meta name="author" content="{{.Author.Name}}">
+  {{- end}}
+  {{- if .Canonical}}
+  <link rel="canonical" href="{{.Canonical}}">
+  <meta property="og:url" content="{{.Canonical}}">
+  {{- end}}
+  {{- range .Alternates}}
+  <link rel="alternate" hreflang="{{.Lang}}" href="{{.URL}}">
+  {{- end}}
+  <meta property="og:type" content="{{.OGType}}">
+  <meta property="og:site_name" content="{{.Site.Title}}">
+  <meta property="og:title" content="{{.Title}}">
+  <meta property="og:description" content="{{.Description}}">
+  {{- if .OGImage}}
+  <meta property="og:image" content="{{.OGImage}}">
+  <meta name="twitter:card" content="summary_large_image">
+  {{- else}}
+  <meta name="twitter:card" content="summary">
+  {{- end}}
+  {{- if .JSONLD}}
+  <script type="application/ld+json">{{.JSONLD}}</script>
+  {{- end}}
+  <link rel="stylesheet" href="{{.Styles}}">
+  {{- if .ThemeCSS}}
+  <link rel="stylesheet" href="{{.ThemeCSS}}">
+  {{- end}}
+  {{- if .CustomCSS}}
+  <link rel="stylesheet" href="{{.CustomCSS}}">
+  {{- end}}
+  {{- if .InlineCSS}}
+  <style>{{.InlineCSS}}</style>
+  {{- end}}
+  <script>
+    /* Runs before the first paint, so the page never flashes the wrong theme or track. */
+    (function () {
+      var root = document.documentElement, key = root.dataset.storage, get = function (name) {
+        try { return localStorage.getItem(key + ":" + name); } catch (e) { return null; }
+      };
+      var theme = get("theme");
+      if (theme) root.dataset.theme = theme;
+      if (root.dataset.tracks) {
+        var tracks = root.dataset.tracks.split(","), track = new URLSearchParams(location.search).get("track") || get("track");
+        root.dataset.track = tracks.indexOf(track) >= 0 ? track : tracks[0];
+      }
+    })();
+  </script>
+</head>
+<body{{if .Module}} data-module="{{.Module.Slug}}"{{end}} data-copy="{{.UI.copy}}" data-copied="{{.UI.copied}}">
+  <a class="skip-link" href="#main">{{.UI.skip_to_content}}</a>
+  <header class="topbar">
+    <a class="brand" href="{{.Home}}">{{.Site.ShortTitle}}</a>
+    <div class="topbar-tools">
+      {{- if .Count}}
+      <span class="progress" data-progress data-slugs="{{.Slugs}}" data-label="{{.UI.done}}" hidden></span>
+      {{- end}}
+      {{- if .Tracks}}
+      <label class="track-picker" hidden data-track-picker>
+        <span class="visually-hidden">{{.UI.track}}</span>
+        <select data-track-select>
+          {{- range .Tracks}}
+          <option value="{{.ID}}">{{.Name}}</option>
+          {{- end}}
+        </select>
+      </label>
+      {{- end}}
+      {{- if gt (len .Languages) 1}}
+      <details class="menu">
+        <summary aria-label="{{.UI.language}}">{{range .Languages}}{{if .Current}}{{.Name}}{{end}}{{end}}</summary>
+        <ul>
+          {{- range .Languages}}
+          <li><a href="{{.URL}}" lang="{{.Code}}" hreflang="{{.Code}}"{{if .Current}} aria-current="true"{{end}}>{{.Name}}</a></li>
+          {{- end}}
+        </ul>
+      </details>
+      {{- end}}
+      {{- if .Repository}}
+      <a class="tool-link" href="{{.Repository}}" rel="noopener">{{.UI.repository}}</a>
+      {{- end}}
+      <button class="icon-button" type="button" data-theme-toggle aria-label="{{.UI.theme}}" title="{{.UI.theme}}" hidden>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </header>
+
+  {{block "main" .}}{{end}}
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p><strong>{{.Site.Title}}</strong>{{if .Author.Name}} · {{.Author.Name}}{{end}}</p>
+      <ul class="footer-links">
+        {{- range .Author.Links}}
+        <li><a href="{{.URL}}" rel="noopener me">{{.Label}}</a></li>
+        {{- end}}
+      </ul>
+      <p class="built-with">{{.UI.built_with}}</p>
+    </div>
+  </footer>
+  <script src="{{.Script}}" defer></script>
+</body>
+</html>
+
+{{/* Pieces of a module page, shared by every theme. */}}
+
+{{define "module-notice"}}
+{{- if .Module.Fallback}}
+<p class="notice">{{.UI.not_translated}}</p>
+{{- end}}
+{{end}}
+
+{{define "exercise"}}
+{{- with .Module.Exercise}}
+<section class="exercise" aria-label="{{$.UI.exercise_files}}">
+  <p class="exercise-title">{{$.UI.exercise_files}}</p>
+  <div class="exercise-actions">
+    {{- if .ZipURL}}<a class="button button-small" href="{{.ZipURL}}" download>{{$.UI.download_exercise}}</a>{{end}}
+    {{- if .SolutionURL}}<a class="button button-small button-quiet" href="{{.SolutionURL}}" download>{{$.UI.download_solution}}</a>{{end}}
+    {{- if .RepoURL}}<a href="{{.RepoURL}}" rel="noopener">{{$.UI.view_repository}}</a>{{end}}
+  </div>
+  {{- if .Files}}
+  <details class="exercise-files">
+    <summary>{{$.UI.files}} ({{len .Files}})</summary>
+    <ul>
+      {{- range .Files}}
+      <li><code>{{.}}</code></li>
+      {{- end}}
+    </ul>
+  </details>
+  {{- end}}
+</section>
+{{- end}}
+{{end}}
+
+{{define "module-end"}}
+<div class="complete">
+  <button class="button button-quiet" type="button" data-complete data-label="{{.UI.mark_complete}}" data-done-label="✓ {{.UI.completed}}" hidden>{{.UI.mark_complete}}</button>
+</div>
+
+<nav class="pager" aria-label="{{.UI.previous}} / {{.UI.next}}">
+  {{- with .Module.Prev}}
+  <a class="pager-prev" href="{{.URL}}"><small>{{$.UI.previous}}</small><span>← {{.Title}}</span></a>
+  {{- end}}
+  {{- with .Module.Next}}
+  <a class="pager-next" href="{{.URL}}" rel="next"><small>{{$.UI.next}}</small><span>{{.Title}} →</span></a>
+  {{- end}}
+</nav>
+{{end}}
+
+{{define "toc"}}
+{{- if .Module.Headings}}
+<aside class="toc">
+  <nav aria-label="{{.UI.on_this_page}}">
+    <p class="toc-title">{{.UI.on_this_page}}</p>
+    <ul>
+      {{- range .Module.Headings}}
+      <li class="toc-level-{{.Level}}{{if .Track}} track-scoped{{end}}"{{if .Track}} data-track="{{.Track}}"{{end}}><a href="#{{.ID}}">{{.Text}}</a></li>
+      {{- end}}
+    </ul>
+  </nav>
+</aside>
+{{- end}}
+{{end}}
+
+{{define "nav"}}
+<nav class="module-nav" aria-label="{{.UI.contents}}">
+  <a class="module-nav-home" href="{{.Home}}">{{.UI.all_modules}}</a>
+  {{- range .Parts}}
+  {{- if .Title}}
+  <p class="module-nav-part">{{.Title}}</p>
+  {{- end}}
+  <ol>
+    {{- range .Modules}}
+    <li>
+      <a href="{{.URL}}" data-module-link="{{.Slug}}"{{if .Current}} aria-current="page"{{end}}>
+        <span class="module-nav-number">{{pad .Number}}</span>
+        <span>{{.Title}}</span>
+      </a>
+    </li>
+    {{- end}}
+  </ol>
+  {{- end}}
+</nav>
+{{end}}

@@ -1,0 +1,71 @@
+{{define "main"}}
+<main id="main" class="landing">
+  <section class="hero">
+    <h1>{{.Site.Title}}</h1>
+    {{- if .Site.Description}}
+    <p class="hero-lead">{{.Site.Description}}</p>
+    {{- end}}
+    {{- if .Landing.StartAt}}
+    <p><a class="button" href="{{.Landing.StartAt}}">{{.UI.start}} →</a></p>
+    {{- end}}
+    {{- if .Site.Facts}}
+    <dl class="facts">
+      {{- range .Site.Facts}}
+      <div><dt>{{.Label}}</dt><dd>{{.Value}}</dd></div>
+      {{- end}}
+    </dl>
+    {{- end}}
+  </section>
+
+  {{- if .Landing.Before}}
+  <section class="prose">{{.Landing.Before}}</section>
+  {{- end}}
+
+  <section class="contents" id="modules" aria-label="{{.UI.contents}}">
+    <h2>{{.UI.contents}}</h2>
+    {{- range .Parts}}
+    {{- if .Title}}
+    <h3 class="part-title">{{.Title}}</h3>
+    {{- end}}
+    <div class="module-grid">
+      {{- range .Modules}}
+      <a class="module-card" href="{{.URL}}" data-module-link="{{.Slug}}">
+        <span class="module-card-number">{{$.UI.module}} {{pad .Number}}{{if .Draft}} · {{$.UI.draft}}{{end}}</span>
+        <span class="module-card-title">{{.Title}}</span>
+        {{- if .Description}}
+        <span class="module-card-text">{{.Description}}</span>
+        {{- end}}
+        {{- if .Duration}}
+        <span class="module-card-duration">{{.Duration}}</span>
+        {{- end}}
+      </a>
+      {{- end}}
+    </div>
+    {{- end}}
+  </section>
+
+  {{- if .Landing.After}}
+  <section class="prose">{{.Landing.After}}</section>
+  {{- end}}
+
+  {{- if .Author.Name}}
+  <section class="author">
+    <h2>{{.UI.author}}</h2>
+    <div class="author-card">
+      {{- if .AvatarURL}}
+      <img src="{{.AvatarURL}}" alt="{{.Author.Name}}" width="88" height="88" loading="lazy">
+      {{- end}}
+      <div>
+        <p class="author-name">{{.Author.Name}}</p>
+        {{- if .Author.Role}}
+        <p class="author-role">{{.Author.Role}}</p>
+        {{- end}}
+        {{- if .Author.Bio}}
+        <p>{{.Author.Bio}}</p>
+        {{- end}}
+      </div>
+    </div>
+  </section>
+  {{- end}}
+</main>
+{{end}}
