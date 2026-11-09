@@ -12,8 +12,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jespino/workshops-framework/internal/config"
-	"github.com/jespino/workshops-framework/internal/theme"
+	"github.com/jespino/wsbuilder/internal/config"
+	"github.com/jespino/wsbuilder/internal/theme"
 )
 
 const baseConfig = `title: Test Workshop

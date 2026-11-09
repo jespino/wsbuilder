@@ -1,11 +1,11 @@
-# wsbuilder
+# wsbuilder — Workshop Builder
 
 `wsbuilder` turns a folder of markdown files into a workshop website: module pages with
 progress tracking, code tracks, translations, exercise downloads and hints. The result is
 a plain static site that search engines can index and any host can serve.
 
 ```bash
-go install github.com/jespino/workshops-framework/cmd/wsbuilder@latest
+go install github.com/jespino/wsbuilder/cmd/wsbuilder@latest
 
 wsbuilder init my-workshop                      # or --theme internals
 cd my-workshop

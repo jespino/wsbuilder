@@ -25,7 +25,7 @@ jobs:
           go-version: stable
 
       - name: Build the website
-        run: go run github.com/jespino/workshops-framework/cmd/wsbuilder@latest build
+        run: go run github.com/jespino/wsbuilder/cmd/wsbuilder@latest build
 
       - uses: actions/upload-pages-artifact@v3
         with:

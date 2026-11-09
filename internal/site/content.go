@@ -13,7 +13,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/jespino/workshops-framework/internal/config"
+	"github.com/jespino/wsbuilder/internal/config"
 	"gopkg.in/yaml.v3"
 )
 

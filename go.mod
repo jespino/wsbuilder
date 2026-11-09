@@ -1,4 +1,4 @@
-module github.com/jespino/workshops-framework
+module github.com/jespino/wsbuilder
 
 go 1.25
 

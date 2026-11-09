@@ -4,7 +4,7 @@ This repository is a workshop built with `wsbuilder`, which turns the markdown i
 `modules/` into a static website. These are the instructions for coding agents.
 
 If `wsbuilder` is not on the PATH, run it with
-`go run github.com/jespino/workshops-framework/cmd/wsbuilder@latest <command>`.
+`go run github.com/jespino/wsbuilder/cmd/wsbuilder@latest <command>`.
 
 ## Rules
 

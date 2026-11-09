@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jespino/workshops-framework/internal/site"
+	"github.com/jespino/wsbuilder/internal/site"
 )
 
 func TestInitCreatesAWorkshopThatBuilds(t *testing.T) {

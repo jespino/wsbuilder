@@ -16,11 +16,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/jespino/workshops-framework/internal/config"
-	"github.com/jespino/workshops-framework/internal/dev"
-	"github.com/jespino/workshops-framework/internal/scaffold"
-	"github.com/jespino/workshops-framework/internal/site"
-	"github.com/jespino/workshops-framework/internal/theme"
+	"github.com/jespino/wsbuilder/internal/config"
+	"github.com/jespino/wsbuilder/internal/dev"
+	"github.com/jespino/wsbuilder/internal/scaffold"
+	"github.com/jespino/wsbuilder/internal/site"
+	"github.com/jespino/wsbuilder/internal/theme"
 )
 
 const usage = `wsbuilder creates workshops from markdown files.

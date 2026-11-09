@@ -21,7 +21,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/jespino/workshops-framework/internal/site"
+	"github.com/jespino/wsbuilder/internal/site"
 )
 
 const (

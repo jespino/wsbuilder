@@ -15,8 +15,8 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/jespino/workshops-framework/internal/config"
-	"github.com/jespino/workshops-framework/internal/theme"
+	"github.com/jespino/wsbuilder/internal/config"
+	"github.com/jespino/wsbuilder/internal/theme"
 )
 
 // The starter files. "all:" keeps the dotfiles. Names ending in .tmpl have

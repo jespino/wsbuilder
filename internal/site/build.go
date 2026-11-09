@@ -15,9 +15,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/jespino/workshops-framework/internal/config"
-	"github.com/jespino/workshops-framework/internal/markdown"
-	"github.com/jespino/workshops-framework/internal/theme"
+	"github.com/jespino/wsbuilder/internal/config"
+	"github.com/jespino/wsbuilder/internal/markdown"
+	"github.com/jespino/wsbuilder/internal/theme"
 )
 
 // Options selects what a build does.
