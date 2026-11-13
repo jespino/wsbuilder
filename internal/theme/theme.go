@@ -59,7 +59,7 @@ var Available = []Info{
 	{DefaultName, "Bold cards, a dark navbar and a purple to orange gradient"},
 	{BaseName, "Sidebar, table of contents and quiet module cards, for long workshops"},
 	{"internals", "A single reading column, inspired by Internals for Interns"},
-	{"kids", "Bright colors, rounded letters and big buttons, for young learners"},
+	{"kids", "Bright colors, rounded letters, chunky buttons and a small celebration on each finished module, for young learners"},
 }
 
 // Pages lists the templates that render a page on top of the base template.

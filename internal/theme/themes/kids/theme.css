@@ -154,7 +154,8 @@ h1, h2, h3, h4 { color: var(--heading); }
 }
 .icon-button { padding: 0 9px; }
 .track-picker select:hover, .menu summary:hover, .icon-button:hover { border-color: var(--primary); }
-.menu ul { border: 2px solid var(--line); border-radius: 16px; }
+/* z-index keeps the dropdown above the rainbow stripe under the top bar. */
+.menu ul { z-index: 1; border: 2px solid var(--line); border-radius: 16px; }
 
 /* Buttons: chunky, with a shadow underneath that they sink into. ----------- */
 
