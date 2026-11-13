@@ -200,6 +200,7 @@ load nothing from third parties, so they work offline, on conference wifi includ
 | `default` | Bold cards, a dark navbar and a purple to orange gradient |
 | `simple` | Sidebar, table of contents and quiet module cards, for long workshops |
 | `internals` | A single reading column, inspired by [Internals for Interns](https://internals-for-interns.com/) |
+| `kids` | Bright colors, rounded letters, chunky buttons and a small celebration on each finished module, for young learners |
 
 Select one with `theme.name` in `workshop.yaml`, or with `wsbuilder init --theme`. Every
 theme has a light and a dark mode. `default` and `internals` prefer fonts like Lato and

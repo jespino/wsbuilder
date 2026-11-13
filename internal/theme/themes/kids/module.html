@@ -1,0 +1,27 @@
+{{define "main"}}
+{{- $m := .Module}}
+<main id="main" class="doc">
+  <article class="module-sheet">
+    <header class="doc-header">
+      <p class="eyebrow">
+        <span class="eyebrow-number">{{.UI.module}} {{$m.Number}}</span>
+        {{- if $m.Part}}<span>{{$m.Part}}</span>{{end}}
+        {{- if $m.Duration}}<span>{{$m.Duration}}</span>{{end}}
+        {{- if $m.Draft}}<span class="draft-badge">{{.UI.draft}}</span>{{end}}
+      </p>
+      <h1>{{$m.Title}}</h1>
+      {{- if $m.Description}}
+      <p class="lede">{{$m.Description}}</p>
+      {{- end}}
+    </header>
+
+    {{- template "contents-box" .}}
+    {{- template "module-notice" .}}
+    {{- template "exercise" .}}
+
+    <div class="prose">{{$m.Content}}</div>
+  </article>
+  {{- template "module-end" .}}
+</main>
+{{- template "toc" .}}
+{{end}}
